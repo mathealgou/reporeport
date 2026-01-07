@@ -2,36 +2,52 @@ package projectType
 
 import (
 	"reporeport/utils/count"
+	"reporeport/utils/fileSystem"
 	"strings"
 )
 
-func InferProjectType(files []string, percentagesByType map[string]float64) string {
-	// Placeholder logic for inferring project type
-	// In a real implementation, this would analyze the files to determine the project type
+func InferProjectType(files []string, percentagesByType map[string]float64) (string, []string) {
 
 	top1percentage := count.GetTopNPercentages(percentagesByType, 1)
 
+	var projectType string
+
+	// simple detection by language
 	switch {
 	case isFileTypeInTopN("py", top1percentage):
-		return "Python Project"
+		projectType = "Python Project"
 	case isFileTypeInTopN("java", top1percentage):
-		return "Java Project"
+		projectType = "Java Project"
 	case isFileTypeInTopN("go", top1percentage):
-		return "Go Project"
+		projectType = "Go Project"
 	}
 
 	top3percentages := count.GetTopNPercentages(percentagesByType, 3)
 
 	if len(files) == 0 {
-		return "Unknown"
+		projectType = "Empty Repository"
 	}
-	if hasPackageJSON(files) && isFileTypeInTopN("jsx", top3percentages) || isFileTypeInTopN("tsx", top3percentages) {
-		return "React Project"
+	if hasPackageJSON(files) && (isFileTypeInTopN("jsx", top3percentages) || isFileTypeInTopN("js", top3percentages)) {
+		projectType = "Javascript React Project"
 	}
-	if hasPackageJSON(files) && isFileTypeInTopN("ts", top3percentages) {
-		return "TypeScript Project"
+	if hasPackageJSON(files) && isFileTypeInTopN("tsx", top3percentages) || isFileTypeInTopN("ts", top3percentages) {
+		projectType = "Typescript React Project"
 	}
-	return "Generic Project"
+	if hasPackageJSON(files) && isFileTypeInTopN("ts", top1percentage) {
+		projectType = "Typescript backend/script Project"
+	}
+	if hasPackageJSON(files) && isFileTypeInTopN("js", top1percentage) {
+		projectType = "Javascript backend/script Project"
+	}
+	if isVtexAppOrStore(files) {
+		projectType = "VTEX IO App or Storefront"
+	}
+
+	// fallback
+	if projectType == "" {
+		projectType = "Unable to determine project type"
+	}
+	return projectType, nil
 }
 
 func hasPackageJSON(files []string) bool {
@@ -48,10 +64,13 @@ func isFileTypeInTopN(fileType string, topN map[string]float64) bool {
 	return exists
 }
 
-func hasTsxFiles(files []string) bool {
+func isVtexAppOrStore(files []string) bool {
 	for _, file := range files {
-		if len(file) > 4 && file[len(file)-4:] == ".tsx" {
-			return true
+		if strings.Contains(file, "manifest.json") {
+			if fileSystem.SearchForWordInFile(file, "vtex") {
+				return true
+			}
+
 		}
 	}
 	return false
