@@ -37,6 +37,8 @@ func main() {
 
 	output.PrintProjectType(report)
 
+	output.PrintProjectCharacteristics(report.ProjectCharacteristics)
+
 	output.PrintLinesByPercentage(report)
 
 	// Just to show off, really

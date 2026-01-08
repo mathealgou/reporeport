@@ -2,6 +2,7 @@ package output
 
 import (
 	"fmt"
+	"reporeport/utils/configs"
 	"reporeport/utils/output/colors"
 	"strings"
 )
@@ -23,7 +24,8 @@ func sortPercentageLinesByType(percentageLinesByType map[string]float64) []strin
 
 func FormatPercentageLinesByType(percentageLinesByType map[string]float64) string {
 	sortedKeys := sortPercentageLinesByType(percentageLinesByType)
-	width := 30
+	// round down
+	width := configs.GetTerminalWidth() / 2
 	var lines []string
 	var biggestPercentExt string
 	for ext, percent := range percentageLinesByType {

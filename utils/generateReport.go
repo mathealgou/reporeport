@@ -3,6 +3,7 @@ package utils
 import (
 	"reporeport/utils/count"
 	"reporeport/utils/fileSystem"
+	"reporeport/utils/projectCharacteristics"
 	"reporeport/utils/projectType"
 	"reporeport/utils/types"
 )
@@ -29,13 +30,16 @@ func GenerateReport(includeLibs bool) types.Report {
 
 	projectTypeName := projectType.InferProjectType(files, percentageLinesByType)
 
+	projectCharacteristics := projectCharacteristics.ProjectCharacteristics(files)
+
 	result := types.Report{
-		TotalFiles:            len(filteredFiles),
-		TotalByType:           totalByType,
-		PercentageByType:      percentageByType,
-		TotalLinesByType:      linesByExtension,
-		PercentageLinesByType: percentageLinesByType,
-		ProjectType:           projectTypeName,
+		TotalFiles:             len(filteredFiles),
+		TotalByType:            totalByType,
+		PercentageByType:       percentageByType,
+		TotalLinesByType:       linesByExtension,
+		PercentageLinesByType:  percentageLinesByType,
+		ProjectType:            projectTypeName,
+		ProjectCharacteristics: projectCharacteristics,
 	}
 	return result
 }
