@@ -54,6 +54,7 @@ Flags currently supported in code:
 
 - `--help`: show CLI help
 - `--include-libs`: count files inside lib/vendor/node_modules/.venv, etc.
+- `--use-gitignore`: respect `.gitignore` rules when scanning files, skipping ignored files and directories.
 
 ## Example output
 
