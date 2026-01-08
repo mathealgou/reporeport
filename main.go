@@ -23,6 +23,7 @@ func main() {
 		return s == "--help"
 	}) != nil {
 		help.PrintHelp()
+		return
 	}
 
 	includeLibs := utils.FindInSlice(anyArgs, func(x any) bool {
