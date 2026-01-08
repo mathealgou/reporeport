@@ -60,7 +60,7 @@ func CountFileExtensionPercentage(counts map[string]int) map[string]float64 {
 	return percentages
 }
 
-func countLines(filename string) int {
+func CountLines(filename string) int {
 	lc := 0
 	f, err := os.Open(filename)
 	if err != nil {
@@ -82,7 +82,7 @@ func CountLinesByExtension(files []string) map[string]int {
 		counts[ext] = 0
 		for _, file := range files {
 			if strings.HasSuffix(file, "."+ext) {
-				lineCount := countLines(file)
+				lineCount := CountLines(file)
 				counts[ext] += lineCount
 			}
 		}

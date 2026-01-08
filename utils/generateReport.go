@@ -1,7 +1,6 @@
 package utils
 
 import (
-	"fmt"
 	"reporeport/utils/count"
 	"reporeport/utils/fileSystem"
 	"reporeport/utils/projectType"
@@ -28,9 +27,7 @@ func GenerateReport(includeLibs bool) types.Report {
 
 	percentageLinesByType := count.CountLinePercentageByExtension(linesByExtension)
 
-	projectTypeName, projectCharacteristics := projectType.InferProjectType(files, percentageLinesByType)
-
-	fmt.Println(projectCharacteristics)
+	projectTypeName := projectType.InferProjectType(files, percentageLinesByType)
 
 	result := types.Report{
 		TotalFiles:            len(filteredFiles),

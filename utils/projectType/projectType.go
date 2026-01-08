@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func InferProjectType(files []string, percentagesByType map[string]float64) (string, []string) {
+func InferProjectType(files []string, percentagesByType map[string]float64) string {
 
 	top1percentage := count.GetTopNPercentages(percentagesByType, 1)
 
@@ -47,7 +47,7 @@ func InferProjectType(files []string, percentagesByType map[string]float64) (str
 	if projectType == "" {
 		projectType = "Unable to determine project type"
 	}
-	return projectType, nil
+	return projectType
 }
 
 func hasPackageJSON(files []string) bool {
