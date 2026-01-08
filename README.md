@@ -14,6 +14,18 @@ Fast CLI that scans a repository, counts files and lines by extension, and infer
 
 ## Install
 
+### Linux
+
+```sh
+sudo curl -sSL https://github.com/mathealgou/reporeport/releases/download/v1.0.0/reporeport -o /usr/local/bin/reporeport && sudo chmod +x /usr/local/bin/reporeport
+```
+
+### Windows
+
+```powershell
+Invoke-WebRequest -Uri "https://github.com/mathealgou/reporeport/releases/download/v1.0.0/reporeport.exe" -OutFile "C:\Windows\System32\reporeport.exe"
+```
+
 ### Pre-built binaries:
 
 Download the latest release from the [Releases](https://github.com/mathealgou/reporeport/releases)
