@@ -48,7 +48,7 @@ func hasDocumentationFiles(files []string) bool {
 	}
 
 	hasSignificantDocFiles := docCount > 0
-	hasSignificantDocLines := docLines >= 1000
+	hasSignificantDocLines := docLines >= 100
 
 	hasDocs := hasSignificantDocFiles && hasSignificantDocLines
 
