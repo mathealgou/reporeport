@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"os"
 	"reporeport/utils"
 	"reporeport/utils/output"
@@ -12,9 +11,7 @@ import (
 func main() {
 	start := time.Now()
 	args := os.Args[1:]
-	for i, arg := range args {
-		fmt.Printf("arg %d: %s\n", i+1, arg)
-	}
+
 	anyArgs := make([]any, len(args))
 
 	for i, a := range args {
@@ -33,7 +30,12 @@ func main() {
 		return s == "--include-libs"
 	}) != nil
 
-	report := utils.GenerateReport(includeLibs)
+	useGitignore := utils.FindInSlice(anyArgs, func(x any) bool {
+		s, _ := x.(string)
+		return s == "--use-gitignore"
+	}) != nil
+
+	report := utils.GenerateReport(includeLibs, useGitignore)
 
 	output.PrintProjectType(report)
 

@@ -8,7 +8,7 @@ import (
 	"reporeport/utils/types"
 )
 
-func GenerateReport(includeLibs bool) types.Report {
+func GenerateReport(includeLibs bool, useGitignore bool) types.Report {
 
 	files := fileSystem.WalkDirectory()
 
@@ -19,6 +19,10 @@ func GenerateReport(includeLibs bool) types.Report {
 		return false
 
 	})
+
+	if useGitignore {
+		filteredFiles = fileSystem.ApplyGitignoreFilter(filteredFiles)
+	}
 
 	totalByType := count.CountFilesByExtension(filteredFiles)
 
