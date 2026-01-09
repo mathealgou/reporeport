@@ -17,13 +17,13 @@ Fast AI-free repository analysis tool that counts files and lines by type, infer
 ### Linux
 
 ```sh
-sudo curl -sSL https://github.com/mathealgou/reporeport/releases/download/v1.1.0/reporeport -o /usr/local/bin/reporeport && sudo chmod +x /usr/local/bin/reporeport
+sudo curl -sSL https://github.com/mathealgou/reporeport/releases/latest/download/reporeport -o /usr/local/bin/reporeport && sudo chmod +x /usr/local/bin/reporeport
 ```
 
 ### Windows
 
 ```powershell
-Invoke-WebRequest -Uri "https://github.com/mathealgou/reporeport/releases/download/v1.1.0/reporeport.exe" -OutFile "C:\Windows\System32\reporeport.exe"
+Invoke-WebRequest -Uri "https://github.com/mathealgou/reporeport/releases/latest/download/reporeport.exe" -OutFile "C:\Windows\System32\reporeport.exe"
 ```
 
 ### Pre-built binaries:
