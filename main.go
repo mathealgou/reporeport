@@ -3,6 +3,7 @@ package main
 import (
 	"os"
 	"reporeport/utils"
+	"reporeport/utils/configs"
 	"reporeport/utils/output"
 	"reporeport/utils/output/help"
 	"time"
@@ -34,6 +35,11 @@ func main() {
 	useGitignore := utils.FindInSlice(anyArgs, func(x any) bool {
 		s, _ := x.(string)
 		return s == "--use-gitignore"
+	}) != nil
+
+	configs.VerboseFlag = utils.FindInSlice(anyArgs, func(x any) bool {
+		s, _ := x.(string)
+		return s == "--verbose"
 	}) != nil
 
 	report := utils.GenerateReport(includeLibs, useGitignore)

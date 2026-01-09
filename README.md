@@ -47,7 +47,7 @@ chmod +x build.sh
 ./build.sh
 ```
 
-Windows build (drops `dist/reporeport.exe`):
+Windows build (drops `dist/reporeport.exe`, requires Bash):
 
 ```sh
 chmod +x build-windows.sh
@@ -67,6 +67,7 @@ Flags currently supported in code:
 - `--help`: show CLI help
 - `--include-libs`: count files inside lib/vendor/node_modules/.venv, etc.
 - `--use-gitignore`: respect `.gitignore` rules when scanning files, skipping ignored files and directories.
+- `--verbose`: Output the processing and analysis steps to the console (may slow down execution due to I/O overheard).
 
 ## Example output
 
