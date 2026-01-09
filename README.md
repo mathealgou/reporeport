@@ -2,7 +2,7 @@
 
 ![Go Version](https://img.shields.io/badge/Go-1.25%2B-00ADD8?logo=go)
 
-Fast CLI that scans a repository, counts files and lines by extension, and infers the project type. Outputs a short, colored summary you can run before diving into unfamiliar codebases.
+Fast AI-free repository analysis tool that counts files and lines by type, infers project type, and provides a concise summary report.
 
 ## Features
 
