@@ -8,6 +8,10 @@ import (
 
 func InferProjectType(files []string, percentagesByType map[string]float64) string {
 
+	if len(files) == 0 {
+		return "Empty Repository"
+	}
+
 	top1percentage := count.GetTopNPercentages(percentagesByType, 1)
 
 	var projectType string
@@ -15,18 +19,15 @@ func InferProjectType(files []string, percentagesByType map[string]float64) stri
 	// simple detection by language
 	switch {
 	case isFileTypeInTopN("py", top1percentage):
-		projectType = "Python Project"
+		return "Python Project"
 	case isFileTypeInTopN("java", top1percentage):
-		projectType = "Java Project"
+		return "Java Project"
 	case isFileTypeInTopN("go", top1percentage):
-		projectType = "Go Project"
+		return "Go Project"
 	}
 
 	top3percentages := count.GetTopNPercentages(percentagesByType, 3)
 
-	if len(files) == 0 {
-		projectType = "Empty Repository"
-	}
 	if hasPackageJSON(files) && (isFileTypeInTopN("jsx", top3percentages) || isFileTypeInTopN("js", top3percentages)) {
 		projectType = "Javascript React Project"
 	}
@@ -41,6 +42,12 @@ func InferProjectType(files []string, percentagesByType map[string]float64) stri
 	}
 	if isVtexAppOrStore(files) {
 		projectType = "VTEX IO App or Storefront"
+	}
+	if isFileTypeInTopN("html", top3percentages) && !isFileTypeInTopN("js", top3percentages) {
+		projectType = "Simple web page"
+	}
+	if isFileTypeInTopN("css", top1percentage) && !isFileTypeInTopN("html", top3percentages) {
+		projectType = "CSS library or framework"
 	}
 
 	// fallback
