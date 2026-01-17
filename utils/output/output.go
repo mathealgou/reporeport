@@ -60,15 +60,15 @@ func PrintProjectType(report types.Report) {
 }
 
 func PrintProjectCharacteristics(characteristics []string) {
-
 	terminalWidth := configs.GetTerminalWidth()
-	textWidth := terminalWidth / 2 // Adjust for bullet points and spacing
+	barGraphLegendWidth := 27 // Adjust for bullet points and spacing
+	textWidth := terminalWidth/2 + barGraphLegendWidth
 	fmt.Println("\nProject Characteristics:")
 	for _, char := range characteristics {
 		if len(char) > textWidth {
 			char = wrapText(char, textWidth)
 		}
-		fmt.Println(colors.ColorEscapeSequencesMap["cyan"] + " - " + colors.ColorReset + char + "\n")
+		// hehehehehe ■
+		fmt.Println(colors.ColorEscapeSequencesMap["cyan"] + " ■ " + colors.ColorReset + char + "\n")
 	}
-
 }

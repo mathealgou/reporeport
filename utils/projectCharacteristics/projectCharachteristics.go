@@ -38,9 +38,6 @@ func ProjectCharacteristics(files []string) []string {
 	if hasDockerfile(files) {
 		projectChars = append(projectChars,
 			"This project contains "+colors.ColorEscapeSequencesMap["cyan"]+"Docker configuration files."+colors.ColorReset)
-	} else {
-		projectChars = append(projectChars,
-			"This project does "+colors.ColorEscapeSequencesMap["cyan"]+"not appear to be Docker compatible."+colors.ColorReset)
 	}
 
 	return projectChars
@@ -80,7 +77,7 @@ func hasDocumentationFiles(files []string) bool {
 }
 
 func tryGetFirstCommitDate() string {
-	command := "git log --reverse --pretty=format:%cd | head -n 1"
+	command := "git log --reverse --pretty=format:%cd --date=iso-local | head -n 1"
 	output, err := exec.Command("bash", "-c", command).Output()
 	if err != nil {
 		return "Unknown"
@@ -91,12 +88,12 @@ func tryGetFirstCommitDate() string {
 		return "Unknown"
 	}
 
-	return firstCommitDate
+	return formatGitIsoDate(firstCommitDate)
 
 }
 
 func tryGetLastCommitDate() string {
-	command := "git log -1 --pretty=format:%cd"
+	command := "git log -1 --pretty=format:%cd --date=iso-local"
 	output, err := exec.Command("bash", "-c", command).Output()
 	if err != nil {
 		return "Unknown"
@@ -107,5 +104,20 @@ func tryGetLastCommitDate() string {
 		return "Unknown"
 	}
 
-	return lastCommitDate
+	return formatGitIsoDate(lastCommitDate)
+}
+
+func formatGitIsoDate(dateString string) string {
+	splitDatestring := strings.Split(dateString, " ")
+	date := splitDatestring[0]
+	time := splitDatestring[1]
+
+	yearMonthDay := strings.Split(date, "-")
+	year := yearMonthDay[0]
+	month := yearMonthDay[1]
+	day := yearMonthDay[2]
+
+	result := fmt.Sprintf("%s/%s/%s @ %s", day, month, year, time)
+
+	return result
 }
