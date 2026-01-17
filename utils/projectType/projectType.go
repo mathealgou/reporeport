@@ -24,6 +24,10 @@ func InferProjectType(files []string, percentagesByType map[string]float64) stri
 		return "Java Project"
 	case isFileTypeInTopN("go", top1percentage):
 		return "Go Project"
+	case isFileTypeInTopN("cpp", top1percentage) || isFileTypeInTopN("hpp", top1percentage):
+		return "C++ Project"
+	case isFileTypeInTopN("c", top1percentage) || isFileTypeInTopN("h", top1percentage):
+		return "C Project"
 	}
 
 	top3percentages := count.GetTopNPercentages(percentagesByType, 3)
