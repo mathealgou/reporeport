@@ -45,7 +45,11 @@ func PrintErrorAndExit(err error) {
 }
 
 func PrintLinesByPercentage(report types.Report, waitTime time.Duration) {
-	fmt.Println("Percentage of Lines by " + colors.ColorEscapeSequencesMap["cyan"] + "File Type:" + colors.ColorReset)
+	if configs.NoColor {
+		fmt.Println("Percentage of Lines by " + "File Type:")
+	} else {
+		fmt.Println("Percentage of Lines by " + colors.ColorEscapeSequencesMap["cyan"] + "File Type:" + colors.ColorReset)
+	}
 	percentageLinesOutput := strings.Split(FormatPercentageLinesByType(report.PercentageLinesByType), "\n")
 
 	for _, line := range percentageLinesOutput {
@@ -55,12 +59,24 @@ func PrintLinesByPercentage(report types.Report, waitTime time.Duration) {
 }
 
 func PrintElapsedTime(elapsedTime time.Duration) {
-	message := "Report generated in: " + colors.ColorEscapeSequencesMap["cyan"] + elapsedTime.String() + colors.ColorReset
+	var message string
+	if configs.NoColor {
+		message = "Report generated in: " + elapsedTime.String()
+
+	} else {
+		message = "Report generated in: " + colors.ColorEscapeSequencesMap["cyan"] + elapsedTime.String() + colors.ColorReset
+	}
 	fmt.Println(message)
 }
 
 func PrintProjectType(report types.Report) {
-	message := "Inferred Project Type: " + colors.ColorEscapeSequencesMap["cyan"] + report.ProjectType + colors.ColorReset
+	var message string
+	if configs.NoColor {
+		message = "Inferred Project Type: " + report.ProjectType
+	} else {
+
+		message = "Inferred Project Type: " + colors.ColorEscapeSequencesMap["cyan"] + report.ProjectType + colors.ColorReset
+	}
 	fmt.Println(message)
 }
 
@@ -73,8 +89,13 @@ func PrintProjectCharacteristics(characteristics []string, waitTime time.Duratio
 		if len(char) > textWidth {
 			char = wrapText(char, textWidth)
 		}
+		if configs.NoColor {
+			fmt.Println(" ■ " + char + "\n")
+
+		} else {
+			fmt.Println(colors.ColorEscapeSequencesMap["cyan"] + " ■ " + colors.ColorReset + char + "\n")
+		}
 		// hehehehehe ■
-		fmt.Println(colors.ColorEscapeSequencesMap["cyan"] + " ■ " + colors.ColorReset + char + "\n")
 		time.Sleep(waitTime)
 	}
 }
@@ -86,5 +107,9 @@ func PrintTotalLinesOfCode(report types.Report) {
 		sum += count
 	}
 
-	fmt.Println(colors.ColorEscapeSequencesMap["cyan"] + " ■ " + strconv.Itoa(sum) + " ■ " + colors.ColorReset + " lines of code in total\n")
+	if configs.NoColor {
+		fmt.Println(" ■ " + strconv.Itoa(sum) + " ■ " + " lines of code in total\n")
+	} else {
+		fmt.Println(colors.ColorEscapeSequencesMap["cyan"] + " ■ " + strconv.Itoa(sum) + " ■ " + colors.ColorReset + " lines of code in total\n")
+	}
 }

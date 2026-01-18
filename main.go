@@ -41,7 +41,11 @@ func main() {
 		s, _ := x.(string)
 		return s == "--verbose"
 	}) != nil
-	// Just to show off, really
+
+	configs.NoColor = utils.FindInSlice(anyArgs, func(x any) bool {
+		s, _ := x.(string)
+		return s == "--no-color"
+	}) != nil
 
 	report := utils.GenerateReport(includeLibs, useGitignore)
 

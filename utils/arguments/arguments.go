@@ -17,6 +17,7 @@ var Arguments = []Argument{
 	{Argument: "--include-libs", Description: "Include library files (such as node_modules or .venv) in the output"},
 	{Argument: "--use-gitignore", Description: "Respect .gitignore files when generating the report"},
 	{Argument: "--verbose", Description: "Output the processing and analysis steps to the console (may slow down execution due to I/O overheard)"},
+	{Argument: "--no-color", Description: "Print the report in black and white."},
 }
 
 func GetArgumentDescription(argument string) string {

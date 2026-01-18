@@ -13,10 +13,19 @@ func ProjectCharacteristics(files []string) []string {
 	var projectChars []string
 
 	if hasDocumentationFiles(files) {
-		projectChars = append(projectChars,
-			"This project has a "+(colors.ColorEscapeSequencesMap["cyan"]+"significant amount of documentation."+colors.ColorReset))
+		if configs.NoColor {
+			projectChars = append(projectChars, "This project has a significant amount of documentation.")
+
+		} else {
+			projectChars = append(projectChars,
+				"This project has a "+(colors.ColorEscapeSequencesMap["cyan"]+"significant amount of documentation."+colors.ColorReset))
+		}
 	} else {
-		projectChars = append(projectChars, "This project seems to"+colors.ColorEscapeSequencesMap["cyan"]+" lack sufficient documentation, you're on your own, buddy."+colors.ColorReset)
+		if configs.NoColor {
+			projectChars = append(projectChars, "This project seems to lack sufficient documentation, you're on your own, buddy.")
+		} else {
+			projectChars = append(projectChars, "This project seems to"+colors.ColorEscapeSequencesMap["cyan"]+" lack sufficient documentation, you're on your own, buddy."+colors.ColorReset)
+		}
 	}
 
 	// git stuff
@@ -27,14 +36,23 @@ func ProjectCharacteristics(files []string) []string {
 
 	firstCommitDate := tryGetFirstCommitDate()
 	if firstCommitDate != "Unknown" {
-		projectChars = append(projectChars, "The first commit in this repository was made on "+(colors.ColorEscapeSequencesMap["cyan"]+firstCommitDate+colors.ColorReset+"."))
+		if configs.NoColor {
+			projectChars = append(projectChars, "The first commit in this repository was made on "+firstCommitDate+".")
+		} else {
+			projectChars = append(projectChars, "The first commit in this repository was made on "+(colors.ColorEscapeSequencesMap["cyan"]+firstCommitDate+colors.ColorReset+"."))
+		}
 	} else {
 		projectChars = append(projectChars, "Could not determine the date of the first commit.")
+
 	}
 
 	lastCommitDate := tryGetLastCommitDate()
 	if lastCommitDate != "Unknown" {
-		projectChars = append(projectChars, "The last commit in this repository was made on "+(colors.ColorEscapeSequencesMap["cyan"]+lastCommitDate+colors.ColorReset+"."))
+		if configs.NoColor {
+			projectChars = append(projectChars, "The last commit in this repository was made on "+lastCommitDate+".")
+		} else {
+			projectChars = append(projectChars, "The last commit in this repository was made on "+(colors.ColorEscapeSequencesMap["cyan"]+lastCommitDate+colors.ColorReset+"."))
+		}
 	} else {
 		projectChars = append(projectChars, "Could not determine the date of the last commit.")
 	}
@@ -42,14 +60,21 @@ func ProjectCharacteristics(files []string) []string {
 	gitRemote := tryGetGitRemote()
 
 	if gitRemote != "Unknown" {
-		projectChars = append(projectChars, "Git remote set at "+colors.ColorEscapeSequencesMap["cyan"]+gitRemote+colors.ColorReset)
+		if configs.NoColor {
+			projectChars = append(projectChars, "Git remote set at "+gitRemote)
+		} else {
+			projectChars = append(projectChars, "Git remote set at "+colors.ColorEscapeSequencesMap["cyan"]+gitRemote+colors.ColorReset)
+		}
 	}
 
 	// docker stuff
 
 	if hasDockerfile(files) {
-		projectChars = append(projectChars,
-			"This project contains "+colors.ColorEscapeSequencesMap["cyan"]+"Docker configuration files."+colors.ColorReset)
+		if configs.NoColor {
+			projectChars = append(projectChars, "This project contains Docker configuration files.")
+		} else {
+			projectChars = append(projectChars, "This project contains "+colors.ColorEscapeSequencesMap["cyan"]+"Docker configuration files."+colors.ColorReset)
+		}
 	}
 
 	return projectChars

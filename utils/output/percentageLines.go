@@ -35,15 +35,23 @@ func FormatPercentageLinesByType(percentageLinesByType map[string]float64) strin
 	}
 	normalizedWidthMultiplier := float64(width) / percentageLinesByType[biggestPercentExt]
 	for i, key := range sortedKeys {
-		color := colors.ColorEscapeSequences[i%len(colors.ColorEscapeSequences)]
-
-		barLength := int(percentageLinesByType[key] * normalizedWidthMultiplier)
-		ext := key
-		percent := percentageLinesByType[ext]
-		bar := strings.Repeat("█", barLength)
-		line := fmt.Sprintf("%-10s | %-5.2f%% | %s", ext, percent, bar)
-		line = color + line
-		lines = append(lines, line)
+		if configs.NoColor {
+			barLength := int(percentageLinesByType[key] * normalizedWidthMultiplier)
+			ext := key
+			percent := percentageLinesByType[ext]
+			bar := strings.Repeat("█", barLength)
+			line := fmt.Sprintf("%-10s | %-5.2f%% | %s", ext, percent, bar)
+			lines = append(lines, line)
+		} else {
+			color := colors.ColorEscapeSequences[i%len(colors.ColorEscapeSequences)]
+			barLength := int(percentageLinesByType[key] * normalizedWidthMultiplier)
+			ext := key
+			percent := percentageLinesByType[ext]
+			bar := strings.Repeat("█", barLength)
+			line := fmt.Sprintf("%-10s | %-5.2f%% | %s", ext, percent, bar)
+			line = color + line
+			lines = append(lines, line)
+		}
 	}
 	lines = append(lines, "\033[0m")
 	return strings.Join(lines, "\n")

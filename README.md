@@ -68,6 +68,7 @@ Flags currently supported in code:
 - `--include-libs`: count files inside lib/vendor/node_modules/.venv, etc.
 - `--use-gitignore`: respect `.gitignore` rules when scanning files, skipping ignored files and directories.
 - `--verbose`: Output the processing and analysis steps to the console (may slow down execution due to I/O overheard).
+- `--no-collor`: Print the report in black and white.
 
 ## Example output
 
