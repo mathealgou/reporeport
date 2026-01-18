@@ -74,7 +74,7 @@ Flags currently supported in code:
 
 ![example](./docs/example.png)
 
-```bash
+```
 $ reporeport
 Inferred Project Type: C++ Project
 
