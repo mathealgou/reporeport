@@ -71,18 +71,51 @@ Flags currently supported in code:
 
 ## Example output
 
-```bash
-Inferred Project Type: React Project
-Percentage of Lines by File Type:
-ts         | 32.73% | ██████████████████████████████
-tsx        | 20.15% | ██████████████████
-json       | 16.37% | ███████████████
-css        | 13.66% | ████████████
-md         | 10.89% | █████████
-yml        | 5.02 % | ████
-js         | 1.19 % | █
+![example](./docs/example.png)
 
-Report generated in: 6.208091ms
+```bash
+$ reporeport
+Inferred Project Type: C++ Project
+
+Project Characteristics:
+ ■ This project has a significant amount of documentation.
+
+ ■ The first commit in this repository was made on 10/04/2013 @
+05:37:04.
+
+ ■ The last commit in this repository was made on 16/01/2026 @
+12:15:04.
+
+ ■ Git remote set at
+https://github.com/godotengine/godot.git
+
+
+Percentage of Lines by File Type:
+cpp        | 60.25% | ███████████████████████████████████████
+c          | 28.49% | ██████████████████
+xml        | 6.00 % | ███
+cs         | 1.97 % | █
+java       | 1.10 % |
+py         | 0.50 % |
+json       | 0.40 % |
+txt        | 0.36 % |
+js         | 0.35 % |
+md         | 0.22 % |
+kt         | 0.14 % |
+gradle     | 0.06 % |
+cfg        | 0.05 % |
+yml        | 0.04 % |
+html       | 0.04 % |
+sh         | 0.02 % |
+yaml       | 0.01 % |
+swift      | 0.00 % |
+toml       | 0.00 % |
+csv        | 0.00 % |
+
+ ■ 2827020 ■  lines of code in total
+
+Report generated in: 991.195438ms
+
 ```
 
 ## How it works
