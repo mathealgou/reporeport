@@ -19,21 +19,33 @@ func ProjectCharacteristics(files []string) []string {
 		projectChars = append(projectChars, "This project seems to"+colors.ColorEscapeSequencesMap["cyan"]+" lack sufficient documentation, you're on your own, buddy."+colors.ColorReset)
 	}
 
+	// git stuff
+
 	if configs.VerboseFlag {
 		fmt.Println("Attempting to retrieve the date of the first commit...")
 	}
+
 	firstCommitDate := tryGetFirstCommitDate()
 	if firstCommitDate != "Unknown" {
 		projectChars = append(projectChars, "The first commit in this repository was made on "+(colors.ColorEscapeSequencesMap["cyan"]+firstCommitDate+colors.ColorReset+"."))
 	} else {
 		projectChars = append(projectChars, "Could not determine the date of the first commit.")
 	}
+
 	lastCommitDate := tryGetLastCommitDate()
 	if lastCommitDate != "Unknown" {
 		projectChars = append(projectChars, "The last commit in this repository was made on "+(colors.ColorEscapeSequencesMap["cyan"]+lastCommitDate+colors.ColorReset+"."))
 	} else {
 		projectChars = append(projectChars, "Could not determine the date of the last commit.")
 	}
+
+	gitRemote := tryGetGitRemote()
+
+	if gitRemote != "Unknown" {
+		projectChars = append(projectChars, "Git remote set at "+colors.ColorEscapeSequencesMap["cyan"]+gitRemote+colors.ColorReset)
+	}
+
+	// docker stuff
 
 	if hasDockerfile(files) {
 		projectChars = append(projectChars,
@@ -120,4 +132,16 @@ func formatGitIsoDate(dateString string) string {
 	result := fmt.Sprintf("%s/%s/%s @ %s", day, month, year, time)
 
 	return result
+}
+
+func tryGetGitRemote() string {
+	command := "git remote get-url origin"
+
+	output, err := exec.Command("bash", "-c", command).Output()
+
+	if err != nil {
+		return "Unknown"
+	}
+
+	return string(output)
 }

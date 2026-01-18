@@ -41,17 +41,28 @@ func main() {
 		s, _ := x.(string)
 		return s == "--verbose"
 	}) != nil
+	// Just to show off, really
 
 	report := utils.GenerateReport(includeLibs, useGitignore)
 
+	elapsed := time.Since(start)
+
+	waitTime := 500 * time.Millisecond
+
 	output.PrintProjectType(report)
 
-	output.PrintProjectCharacteristics(report.ProjectCharacteristics)
+	time.Sleep(waitTime)
 
-	output.PrintLinesByPercentage(report)
+	output.PrintProjectCharacteristics(report.ProjectCharacteristics, waitTime)
 
-	// Just to show off, really
-	elapsed := time.Since(start)
+	time.Sleep(waitTime)
+
+	output.PrintLinesByPercentage(report, waitTime)
+
+	time.Sleep(waitTime)
+
+	output.PrintTotalLinesOfCode(report)
+
 	output.PrintElapsedTime(elapsed)
 
 }

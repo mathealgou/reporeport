@@ -7,6 +7,7 @@ import (
 	"reporeport/utils/configs"
 	"reporeport/utils/output/colors"
 	"reporeport/utils/types"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -43,10 +44,14 @@ func PrintErrorAndExit(err error) {
 	os.Exit(1)
 }
 
-func PrintLinesByPercentage(report types.Report) {
+func PrintLinesByPercentage(report types.Report, waitTime time.Duration) {
 	fmt.Println("Percentage of Lines by " + colors.ColorEscapeSequencesMap["cyan"] + "File Type:" + colors.ColorReset)
-	percentageLinesOutput := FormatPercentageLinesByType(report.PercentageLinesByType)
-	fmt.Println(percentageLinesOutput)
+	percentageLinesOutput := strings.Split(FormatPercentageLinesByType(report.PercentageLinesByType), "\n")
+
+	for _, line := range percentageLinesOutput {
+		fmt.Println(line)
+		time.Sleep(waitTime)
+	}
 }
 
 func PrintElapsedTime(elapsedTime time.Duration) {
@@ -59,7 +64,7 @@ func PrintProjectType(report types.Report) {
 	fmt.Println(message)
 }
 
-func PrintProjectCharacteristics(characteristics []string) {
+func PrintProjectCharacteristics(characteristics []string, waitTime time.Duration) {
 	terminalWidth := configs.GetTerminalWidth()
 	barGraphLegendWidth := 27 // Adjust for bullet points and spacing
 	textWidth := terminalWidth/2 + barGraphLegendWidth
@@ -70,5 +75,16 @@ func PrintProjectCharacteristics(characteristics []string) {
 		}
 		// hehehehehe ■
 		fmt.Println(colors.ColorEscapeSequencesMap["cyan"] + " ■ " + colors.ColorReset + char + "\n")
+		time.Sleep(waitTime)
 	}
+}
+
+func PrintTotalLinesOfCode(report types.Report) {
+	sum := 0
+
+	for _, count := range report.TotalLinesByType {
+		sum += count
+	}
+
+	fmt.Println(colors.ColorEscapeSequencesMap["cyan"] + " ■ " + strconv.Itoa(sum) + " ■ " + colors.ColorReset + " lines of code in total\n")
 }
