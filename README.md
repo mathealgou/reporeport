@@ -54,6 +54,8 @@ chmod +x build-windows.sh
 ./build-windows.sh
 ```
 
+All helper scripts are located in the `scripts/` folder.
+
 ## Usage
 
 From the repo root (or after placing the binary on your PATH):
