@@ -59,7 +59,7 @@ func GenerateReport(includeLibs bool, useGitignore bool) types.Report {
 
 	projectTypeName := projectType.InferProjectType(files, percentageLinesByType)
 
-	projectCharacteristics := projectCharacteristics.ProjectCharacteristics(files)
+	projectCharacteristics := projectCharacteristics.ProjectCharacteristics(files, projectTypeName)
 
 	result := types.Report{
 		TotalFiles:             len(filteredFiles),
@@ -70,6 +70,8 @@ func GenerateReport(includeLibs bool, useGitignore bool) types.Report {
 		ProjectType:            projectTypeName,
 		ProjectCharacteristics: projectCharacteristics,
 	}
+
+
 
 	if configs.VerboseFlag {
 		fmt.Println("Report generation completed.")

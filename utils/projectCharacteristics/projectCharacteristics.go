@@ -6,10 +6,11 @@ import (
 	"reporeport/utils/configs"
 	"reporeport/utils/count"
 	"reporeport/utils/output/colors"
+	"reporeport/utils/vtex"
 	"strings"
 )
 
-func ProjectCharacteristics(files []string) []string {
+func ProjectCharacteristics(files []string, projectTypeName string) []string {
 	var projectChars []string
 
 	if hasDocumentationFiles(files) {
@@ -77,7 +78,23 @@ func ProjectCharacteristics(files []string) []string {
 		}
 	}
 
+
+	// vtex stuff
+	if projectTypeName == "VTEX IO App or Storefront" {
+		vtexCharacteristics := vtex.GetVtexCharacteristics()
+		projectChars = append(projectChars, fmt.Sprintf("This VTEX project is called %s, with vendor account %s, and is currently at version %s.", vtexCharacteristics.Name, vtexCharacteristics.Vendor, vtexCharacteristics.Version))
+
+		if len(vtexCharacteristics.Builders) > 0 {
+			projectChars = append(projectChars, fmt.Sprintf("This project uses the following VTEX builders: %s.", strings.Join(vtexCharacteristics.Builders, ", ")))
+		}
+
+		if len(vtexCharacteristics.PeerDependencies) > 0 {
+			projectChars = append(projectChars, fmt.Sprintf("This project has the following peer dependencies: %s.", strings.Join(vtexCharacteristics.PeerDependencies, ", ")))
+		}
+	}
+
 	return projectChars
+
 }
 
 func hasDockerfile(files []string) bool {
