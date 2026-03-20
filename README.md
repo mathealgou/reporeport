@@ -23,7 +23,7 @@ sudo curl -sSL https://github.com/mathealgou/reporeport/releases/latest/download
 ### Windows
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -Command "Invoke-RestMethod https://raw.githubusercontent.com/mathealgou/reporeport/main/scripts/install.ps1 | Invoke-Expression"
+powershell -NoProfile -ExecutionPolicy Bypass -Command "Invoke-RestMethod https://raw.githubusercontent.com/mathealgou/reporeport/refs/heads/master/scripts/install.ps1 | Invoke-Expression"
 ```
 
 ### Pre-built binaries:
